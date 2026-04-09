@@ -73,13 +73,53 @@ Then open your browser to `http://localhost:8501` and start cracking. 🔓
 ```
 caesar-cipher-analyzer/
 ├── app.py              # Streamlit UI — the pretty face of the operation
-├── analyzer.py         # Core cipher logic — the brains
+├── cli.py              # CLI tool — for when speed is everything
+├── analyzer.py         # Caesar cipher core logic
+├── vigenere.py         # Vigenère cracker (English + French frequency support)
 ├── frequency.py        # Letter frequency analysis & confidence scoring
-├── double_encode.py    # Double encoding & ROT13 detection
+├── double_encode.py    # Double encoding, ROT13 & Vigenère detection
 ├── report.py           # PDF report generation
-├── requirements.txt    # Dependencies (yes, there are a few)
+├── requirements.txt    # Dependencies
 └── README.md           # You are here
 ```
+
+> **Cipher Support Roadmap**
+> - [x] Caesar / ROT-N
+> - [x] ROT13 detection
+> - [x] Vigenère (English + French)
+> - [ ] Substitution cipher
+> - [ ] Rail fence / transposition
+> - [ ] Base64 / encoding detection
+
+---
+
+## ⚡ CLI Usage
+
+For CTF speed runs — no browser, no loading, just answers.
+
+```bash
+# Auto-detect && crack
+python cli.py "KHOOR ZRUOG"
+
+# Force cipher type
+python cli.py "text" -c caesar
+python cli.py "text" -c vigenere
+
+# French Vigenère
+python cli.py "text" -c vigenere --lang french
+
+# Known Vigenère key
+python cli.py "text" -c vigenere -k SECRETKEY
+
+# Brute force all Caesar shifts
+python cli.py "text" -m brute --top 5
+
+# Encrypt / decrypt
+python cli.py "Hello World" -m encrypt -s 13
+python cli.py "Uryyb Jbeyq" -m decrypt -s 13
+```
+
+> The CLI uses `rich` for colored output and formatted tables. Falls back to plain text gracefully.
 
 ---
 
