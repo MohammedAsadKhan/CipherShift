@@ -1,7 +1,7 @@
-# 🔐 CipherShift — Caesar Cipher Analyzer & Breaker
+# 🔐 CipherShift: Caesar Cipher Analyzer & Breaker
 
 > *"I got tired of manually testing all 25 Caesar shifts during CTFs at 3am, so I built this. You're welcome, future me."*
-> — Mo, after his 47th cipher challenge
+> - Mo, after his 47th cipher challenge
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.x-red?logo=streamlit&logoColor=white)
@@ -17,7 +17,19 @@ Because every single CTF has that one Caesar cipher challenge sitting there like
 
 **Spoiler:** I did. Manually. For way too long. Then I wrote this tool so I never have to again.
 
-CipherShift is a full-featured Caesar cipher analyzer built for CTF players, cryptography students, and anyone who's ever stared at `KHOOR ZRUOG` wondering if they needed more coffee or just a ROT3 decode.
+CipherShift started as a simple Caesar cipher tool with **frequency analysis** and honestly, I built it before I even fully understood what frequency analysis was. I just knew it worked. Here's the idea:
+
+> Every language has a fingerprint. In English, the letter **E** shows up ~13% of the time, **T** ~9%, **A** ~8%, and so on. This pattern holds true across basically any large chunk of English text: novels, articles, CTF challenge descriptions, your professor's emails.
+>
+> A Caesar cipher doesn't scramble *which* letters appear, it just slides them all by the same amount. So if E becomes H (shift of 3), then H will be the most common letter in the ciphertext. The shape of the distribution stays the same, it's just shifted.
+>
+> Frequency analysis exploits this. Instead of trying all 25 shifts blindly, you look at which letter appears most often in the ciphertext and guess it maps to E. Then you score each possible shift by how closely the full letter distribution matches expected English. The shift with the best match wins, and that's your answer, usually in milliseconds.
+>
+> It's statistics doing what brute force does, but smarter.*
+
+Once I had that working, I realized: I still had to open CyberChef every time a CTF threw a Vigenère at me. Or a French cipher. Or something double-encoded. So I kept adding to it, and now it's this.
+
+CipherShift is built for **easy-medium CTF challenges**. It won't solve everything, and it'll tell you honestly when it can't. But for the ciphers it does handle, you won't need to leave your terminal.
 
 *(It was ROT3. It's always ROT3.)*
 
@@ -30,11 +42,11 @@ CipherShift is a full-featured Caesar cipher analyzer built for CTF players, cry
 | 🔒 **Encrypt / Decrypt** | Encode or decode with any known shift (0–25) |
 | 🧠 **Auto-Crack** | Frequency analysis against English letter distribution |
 | 📊 **Confidence Scoring** | 0–100% confidence score so you know how sure the tool is (spoiler: if it's below 40%, the answer is probably not English) |
-| 💥 **Brute Force Mode** | All 25 shifts ranked by likelihood — because sometimes you just need to see them all |
+| 💥 **Brute Force Mode** | All 25 shifts ranked by likelihood, because sometimes you just need to see them all |
 | 🔁 **Double Encoding Detection** | Detects if someone thought encrypting twice was clever (it wasn't) |
 | 🔄 **ROT13 Auto-Detection** | Instantly flags ROT13 so you can stop pretending it's a real cipher |
-| 🟣 **Vigenère Detection** | Flags if the ciphertext might actually be Vigenère — so you know when to close this tab and open CyberChef |
-| 📄 **PDF Export** | Export a full analysis report — great for writeups, even better for flexing on teammates |
+| 🟣 **Vigenère Detection** | Flags if the ciphertext might actually be Vigenère, so you know when to close this tab and open CyberChef |
+| 📄 **PDF Export** | Export a full analysis report, great for for writeups, even better for flexing on teammates |
 | 📈 **Plotly Visualizations** | Interactive frequency charts because we're professionals |
 | 🎨 **Clean Streamlit UI** | Dark-mode friendly, no PhD required |
 
@@ -72,8 +84,8 @@ Then open your browser to `http://localhost:8501` and start cracking. 🔓
 
 ```
 caesar-cipher-analyzer/
-├── app.py              # Streamlit UI — the pretty face of the operation
-├── cli.py              # CLI tool — for when speed is everything
+├── app.py              # Streamlit UI: the pretty face of the operation
+├── cli.py              # CLI tool: for when speed is everything
 ├── analyzer.py         # Caesar cipher core logic
 ├── vigenere.py         # Vigenère cracker (English + French frequency support)
 ├── frequency.py        # Letter frequency analysis & confidence scoring
@@ -95,7 +107,7 @@ caesar-cipher-analyzer/
 
 ## ⚡ CLI Usage
 
-For CTF speed runs — no browser, no loading, just answers.
+For CTF speed runs, no browser, no loading, just answers.
 
 ```bash
 # Auto-detect && crack
@@ -141,13 +153,13 @@ Scores are calculated using a normalized chi-squared deviation from expected Eng
 Checks whether decrypting once yields something that looks like it was *also* Caesar-encoded, and reports both shifts. Because yes, CTF authors do this. Yes, it's evil.
 
 ### Vigenère Detection
-Uses the Index of Coincidence (IoC) to flag if the ciphertext likely isn't Caesar at all. If IoC ≈ 0.065, it's English Caesar. If IoC is way off, it's probably Vigenère — and that's a different tool for a different late night.
+Uses the Index of Coincidence (IoC) to flag if the ciphertext likely isn't Caesar at all. If IoC ≈ 0.065, it's English Caesar. If IoC is way off, it's probably Vigenère, and that's a different tool for a different late night.
 
 ---
 
 ## 📸 Screenshots
 
-*(Coming soon — once I finish fighting with Streamlit's column layout for the 4th time)*
+*(Coming soon, once I finish fighting with Streamlit's column layout for the 4th time)*
 
 ---
 
@@ -168,7 +180,7 @@ Double Encode: No
 Vigenère Flag: No
 ```
 
-*"Wow. Revolutionary. Very impressed."* — Me, encountering this in a CTF at 2am
+*"Wow. Revolutionary. Very impressed."* - Me, encountering this in a CTF at 2am
 
 ---
 
@@ -201,14 +213,14 @@ All contributions welcome. Even the ones that are just fixing my typos.
 
 ## 📜 License
 
-MIT — take it, use it, win CTFs with it. Just don't submit my code as your own homework. Or do. I'm a README, not a cop.
+MIT: take it, use it, win CTFs with it. Just don't submit my code as your own homework. Or do. I'm a README, not a cop.
 
 ---
 
 ## 👤 Author
 
 **Mo**
-TAMUCC Computer Science — Cybersecurity Track
+TAMUCC Computer Science, Cybersecurity Track
 ICS Club Member | NCL Competitor | Professional Caesar Cipher Victim
 
 > *"If cracking ciphers was an Olympic sport, I'd have a gold medal and severe sleep deprivation."*
